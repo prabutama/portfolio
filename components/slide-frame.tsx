@@ -8,57 +8,88 @@ export function SlideFrame({ slide }: { slide: ProjectSlide }) {
     </figure>
   ) : null;
 
-const galleryBlock = slide.gallery?.length ? (
-  <div className="mt-6 grid gap-4 lg:grid-cols-2">
-    {/* Kolom kiri */}
-    <div className="space-y-4">
-      {slide.gallery
-        .filter((_, index) => index % 2 === 0)
-        .map((item) => (
-          <figure
-            key={item.src}
-            className="border border-hairline bg-surface-soft p-3"
-          >
-            <img
-              src={item.src}
-              alt={item.alt}
-              className="block h-auto w-full border border-hairline object-contain"
-            />
+  const embedHeight = slide.embed?.height ?? 560;
+  const embedZoom = slide.embed?.zoom ?? 1;
 
-            {item.caption ? (
-              <figcaption className="mt-3 text-sm leading-6 text-mute">
-                {item.caption}
-              </figcaption>
-            ) : null}
-          </figure>
-        ))}
+  const embedBlock = slide.embed ? (
+    <figure className="mt-6 border border-hairline bg-surface-soft p-3">
+      <div className="overflow-hidden border border-hairline bg-white" style={{ height: `${embedHeight}px` }}>
+        <iframe
+          src={slide.embed.src}
+          title={slide.embed.title}
+          loading="lazy"
+          className="border-0 bg-white"
+          style={{
+            width: `${100 / embedZoom}%`,
+            height: `${embedHeight / embedZoom}px`,
+            transform: `scale(${embedZoom})`,
+            transformOrigin: "top left",
+          }}
+        />
+      </div>
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+        {slide.embed.caption ? <figcaption className="text-sm leading-6 text-mute">{slide.embed.caption}</figcaption> : <span className="text-sm leading-6 text-mute">Live project preview.</span>}
+        <a
+          href={slide.embed.src}
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-sm border border-hairline-strong px-3 py-2 text-sm text-ink"
+        >
+          [Open live site]
+        </a>
+      </div>
+    </figure>
+  ) : null;
+
+  const galleryBlock = slide.gallery?.length ? (
+    <div className="mt-6 grid gap-4 lg:grid-cols-2">
+      <div className="space-y-4">
+        {slide.gallery
+          .filter((_, index) => index % 2 === 0)
+          .map((item) => (
+            <figure
+              key={item.src}
+              className="border border-hairline bg-surface-soft p-3"
+            >
+              <img
+                src={item.src}
+                alt={item.alt}
+                className="block h-auto w-full border border-hairline object-contain"
+              />
+
+              {item.caption ? (
+                <figcaption className="mt-3 text-sm leading-6 text-mute">
+                  {item.caption}
+                </figcaption>
+              ) : null}
+            </figure>
+          ))}
+      </div>
+
+      <div className="space-y-4">
+        {slide.gallery
+          .filter((_, index) => index % 2 === 1)
+          .map((item) => (
+            <figure
+              key={item.src}
+              className="border border-hairline bg-surface-soft p-3"
+            >
+              <img
+                src={item.src}
+                alt={item.alt}
+                className="block h-auto w-full border border-hairline object-contain"
+              />
+
+              {item.caption ? (
+                <figcaption className="mt-3 text-sm leading-6 text-mute">
+                  {item.caption}
+                </figcaption>
+              ) : null}
+            </figure>
+          ))}
+      </div>
     </div>
-
-    {/* Kolom kanan */}
-    <div className="space-y-4">
-      {slide.gallery
-        .filter((_, index) => index % 2 === 1)
-        .map((item) => (
-          <figure
-            key={item.src}
-            className="border border-hairline bg-surface-soft p-3"
-          >
-            <img
-              src={item.src}
-              alt={item.alt}
-              className="block h-auto w-full border border-hairline object-contain"
-            />
-
-            {item.caption ? (
-              <figcaption className="mt-3 text-sm leading-6 text-mute">
-                {item.caption}
-              </figcaption>
-            ) : null}
-          </figure>
-        ))}
-    </div>
-  </div>
-) : null;
+  ) : null;
 
   return (
     <section className="px-4 py-6 sm:px-6 sm:py-8">
@@ -84,6 +115,7 @@ const galleryBlock = slide.gallery?.length ? (
                 ))}
               </div>
             ) : null}
+            {embedBlock}
             {imageBlock}
             {galleryBlock}
           </div>
@@ -94,6 +126,7 @@ const galleryBlock = slide.gallery?.length ? (
             {slide.bullets?.map((bullet) => (
               <p key={bullet} className="text-base leading-6 text-body"><span className="font-medium text-ink">[+]</span> {bullet}</p>
             ))}
+            {embedBlock}
             {imageBlock}
             {galleryBlock}
           </div>
@@ -103,6 +136,7 @@ const galleryBlock = slide.gallery?.length ? (
           <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr]">
             <div className="space-y-4">
               {slide.body?.map((paragraph) => <p key={paragraph} className="text-base leading-6 text-body">{paragraph}</p>)}
+              {embedBlock}
               {imageBlock}
               {galleryBlock}
             </div>
@@ -127,6 +161,7 @@ const galleryBlock = slide.gallery?.length ? (
                 </div>
               ))}
             </div>
+            {embedBlock}
             {imageBlock}
             {galleryBlock}
           </div>
@@ -136,6 +171,7 @@ const galleryBlock = slide.gallery?.length ? (
           <div className="space-y-5">
             {slide.body?.map((paragraph) => <p key={paragraph} className="max-w-3xl text-base leading-6 text-body">{paragraph}</p>)}
             {slide.code ? <pre className="overflow-x-auto border border-hairline bg-surface-card p-4 text-sm leading-6 text-ink">{slide.code}</pre> : null}
+            {embedBlock}
             {imageBlock}
             {galleryBlock}
           </div>

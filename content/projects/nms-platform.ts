@@ -191,11 +191,30 @@ export const nmsPlatformProject: Project = {
     },
     {
       number: 11,
+      id: "live-demo",
+      label: "Live Demo",
+      title: "Live Project Preview",
+      layout: "title",
+      eyebrow: "11 / 13",
+      summary: "Embedded preview of NMS dashboard so users can inspect project interface directly from slide deck.",
+      body: [
+        "This slide embeds deployed dashboard interface for direct preview inside presentation. If browser blocks embedded content, open live site in new tab from action button below.",
+      ],
+      embed: {
+        src: "https://dash.prabutama.my.id",
+        title: "NMS dashboard live demo",
+        caption: "Embedded dashboard preview from deployed NMS project.",
+        height: 640,
+        zoom: 0.5,
+      },
+    },
+    {
+      number: 12,
       id: "outcomes",
       label: "Outcomes",
       title: "Outcomes",
       layout: "metrics",
-      eyebrow: "11 / 12",
+      eyebrow: "12 / 13",
       metrics: [
         { label: "Architecture goal", value: "Distributed monitoring" },
         { label: "Site isolation", value: "Outbound gateway flow" },
@@ -207,12 +226,12 @@ export const nmsPlatformProject: Project = {
       ],
     },
     {
-      number: 12,
+      number: 13,
       id: "reflection",
       label: "Reflection",
       title: "What I Learned",
       layout: "bullets",
-      eyebrow: "12 / 12",
+      eyebrow: "13 / 13",
       bullets: [
         "Distributed monitoring reduces WAN polling pressure by moving collection closer to the devices.",
         "Store-and-forward behavior is important for monitoring systems that cross unstable links.",

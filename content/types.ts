@@ -33,6 +33,13 @@ export type ProjectSlide = {
     alt: string;
     caption?: string;
   };
+  embed?: {
+    src: string;
+    title: string;
+    caption?: string;
+    height?: number;
+    zoom?: number;
+  };
   gallery?: Array<{
     src: string;
     alt: string;
